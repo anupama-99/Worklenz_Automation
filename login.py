@@ -27,7 +27,6 @@ time.sleep(5)
 driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-layout/div[1]/div[1]/div/div/div/div/div/worklenz-login/form/button[1]").click()
 time.sleep(5)
 
-name = driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-layout/nz-spin/div/nz-layout/nz-layout/nz-content/div/worklenz-dashboard/div/div/div[1]/div[1]/nz-space/div/h3").text
 
 act_title = driver.title
 exp_title = "Worklenz | Home"
@@ -35,7 +34,11 @@ if act_title==exp_title:
     print("login is success")
 else:
     print("login is failed")
-print(name)
+
+Name = driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-layout/nz-spin/div/nz-layout/nz-layout/nz-content/div/worklenz-dashboard/div/div/div[1]/div[1]/nz-space/div/h3")
+text = Name.text
+print(text)
+
 time.sleep(5)
 
 driver.close()
