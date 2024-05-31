@@ -14,7 +14,7 @@ def To_sign_up():
     To_sign_up = driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-layout/div[1]/div[1]/div/div/div/div/div/worklenz-login/form/nz-form-item[4]/nz-form-control/div/div/p/a")
     To_sign_up.click()
 
-time.sleep(3)
+time.sleep(10)
 
 To_sign_up()
 

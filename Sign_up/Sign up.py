@@ -8,20 +8,22 @@
 # 7) Verify title of the Page
 # 8) Close browser
 
+           ####         not correct code         ######
+
 import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 driver = webdriver.Chrome()
+driver.implicitly_wait(10)
 driver.get("https://uat.app.worklenz.com/auth/signup")
 time.sleep(5)
 driver.maximize_window() # maximize the browser window
 
-Fullname = "Anupama udeshani"
-Email = "wadauwanigasooriya@std.appsc.sab.ac.lk"
-Password ="#18ApC.3619#"
-
+Fullname = "W.A.D. Anupama Udeshani"
+Email = "anu0709udeshani@gmail.com"
+Password ="#18Apc.3619#"
 
 def sign_up():
     Name_element = driver.find_element(By.ID,"full-name")
@@ -46,9 +48,43 @@ def sign_up_verify():
     else:
         print("sign up is failed")
 
+def organization():
+    org = driver.find_element(By.ID,"FJGRL")
+    org.send_keys("setitorg")
+    driver.find_element(By.CLASS_NAME,"ng-star-inserted").click()
+    print(org)
+    print(driver.title)
+
+def project():
+    goback_button = driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-account-setup/div[1]/div/div/div[2]/nz-space/div/nz-skeleton/form/div/button[1]/span")
+    goback_button.click()     # go to enter organization page
+    driver.find_element(By.CLASS_NAME, "ng-star-inserted").click()   # go to enter project page
+    project = driver.find_element(By.ID,"BNWGQG").send_keys("myweather")
+    driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-account-setup/div[1]/div/div/div[2]/nz-space/div/nz-skeleton/form/div/button[2]/span").click()
+    print(project)
+    print(driver.title)
+
+def task():
+    task = driver.find_element(By.ID,"task-name-input-0")
+    task.send_keys("checkweather")
+    driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-account-setup/div[1]/div/div/div[2]/nz-space/div/nz-skeleton/form/div[2]/button[2]/span").click()
+    print(task)
+    print(driver.title)
+
+def teammembers():
+    team = driver.find_element(By.ID,"FQV")
+    team.send_keys("anubwabt414@gmail.com")
+    driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-account-setup/div[1]/div/div/div[2]/nz-space/div/nz-skeleton/form/div/button[3]/span").click()
+    print(team)
+    print(driver.title)
+
 time.sleep(3)
 
 sign_up()
 sign_up_verify()
+organization()
+project()
+task()
+teammembers()
 
 driver.close()
