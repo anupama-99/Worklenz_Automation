@@ -1,18 +1,23 @@
-import time
-
+                           ####      Done      ####
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 driver = webdriver.Chrome()
+
+wait = WebDriverWait(driver,10)
+
 driver.get("https://uat.worklenz.com/")
-driver.implicitly_wait(10)
-time.sleep(5)
 driver.maximize_window()
 
-# to administrator
-driver.find_element(By.XPATH,"//span[normalize-space()='Capabilities']").click()
-driver.find_element(By.XPATH,"//a[normalize-space()='Project Managers']").click()
-time.sleep(10)
+def project_mng():
+    capabilities = wait.until(EC.visibility_of_element_located((By.XPATH, "//span[normalize-space()='Capabilities']")))
+    project_mng = driver.find_element(By.XPATH,"//a[normalize-space()='Project Managers']")
+    capabilities.click()
+    project_mng.click()
+
+    wait.until(EC.title_is("Managers | Worklenz"))
 
 def verify():
     act_title = driver.title
@@ -22,6 +27,7 @@ def verify():
     else:
         print("Not in project managers page")
 
+project_mng()
 verify()
 
 driver.quit()

@@ -22,16 +22,16 @@ def reset():
 
 time.sleep(3)
 print(driver.title)
-# def confirm_process():
-#     Confirm_msg = driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-reset-password/div/div/div/div/div/div/div/nz-result/div[2]")
-#     print(Confirm_msg.text)
-#
-# def enter_email():
-#     driver.get("https://mail.google.com")
-#     email_input = driver.find_element(By.NAME,"identifier")
-#     email_input.send_keys(email)
-#     time.sleep(2)
-#
-# reset()
-# confirm_process()
-# enter_email()
+def confirm_process():
+    Confirm_msg = driver.find_element(By.XPATH,"/html/body/worklenz-root/worklenz-reset-password/div/div/div/div/div/div/div/nz-result/div[2]")
+    print(Confirm_msg.text)
+
+def enter_email():
+    driver.get("https://mail.google.com")
+    email_input = driver.find_element(By.NAME,"identifier")
+    email_input.send_keys(email)
+    time.sleep(2)
+
+reset()
+confirm_process()
+enter_email()

@@ -1,20 +1,22 @@
-import time
-
+                               ###     Done     ###
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 driver = webdriver.Chrome()
+
+wait = WebDriverWait(driver,10)
 driver.get("https://uat.worklenz.com/")
-driver.implicitly_wait(10)
 driver.maximize_window()
 
-# To time tracking
-features = driver.find_element(By.XPATH,"//span[normalize-space()='Features']")
-res_mng = driver.find_element(By.XPATH,"//a[normalize-space()='Resource Management']")
+def resource_mng():
+    features = wait.until(EC.visibility_of_element_located((By.XPATH, "//span[normalize-space()='Features']")))
+    res_mng = driver.find_element(By.XPATH,"//a[normalize-space()='Resource Management']")
+    features.click()
+    res_mng.click()
 
-features.click()
-res_mng.click()
-time.sleep(5)
+    wait.until(EC.title_is("Resource Management | Worklenz"))
 
 def verify():
     act_title = driver.title
@@ -24,6 +26,7 @@ def verify():
     else:
         print("Not in resource management page")
 
+resource_mng()
 verify()
 
 driver.quit()

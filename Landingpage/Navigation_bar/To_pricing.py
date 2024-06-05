@@ -1,19 +1,20 @@
-import time
-
+                                       ###    Done      ###
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 driver = webdriver.Chrome()
+
+wait = WebDriverWait(driver, 20)
+
 driver.get("https://uat.worklenz.com/")
-driver.implicitly_wait(10)
-time.sleep(5)
 driver.maximize_window()
 
 def pricing():
     pricing_button = driver.find_element(By.XPATH,"//a[normalize-space()='Pricing']")
     pricing_button.click()
-    time.sleep(20)
-    print(driver.title)
+    wait.until(EC.title_is("Pricing | Worklenz"))
 
 def verify():
     act_title = driver.title
