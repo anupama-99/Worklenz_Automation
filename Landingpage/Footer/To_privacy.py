@@ -15,8 +15,8 @@ def privacy():
     driver.execute_script("window.scrollBy(0,document.body.scrollHeight)")
 
     wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/footer")))
-    contact_text = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[normalize-space()='Privacy']")))
-    contact_text.click()
+    privacy_text = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[normalize-space()='Privacy']")))
+    privacy_text.click()
     wait.until(EC.title_is("Privacy Policy | Worklenz"))
 
 def verify():

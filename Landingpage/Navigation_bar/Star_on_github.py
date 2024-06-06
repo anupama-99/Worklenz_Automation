@@ -32,10 +32,6 @@ def Star_on_github():
             break
 
     # Step 4: Get the title of the new window
-    new_window_title = WebDriverWait(driver, 10).until(
-        EC.title_is(driver.title)
-    )
-    print("Title of the new window: ", new_window_title)
     print(driver.title)
 
 Star_on_github()

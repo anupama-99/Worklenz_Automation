@@ -15,8 +15,8 @@ def blog():
     driver.execute_script("window.scrollBy(0,document.body.scrollHeight)")
 
     wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/footer")))
-    contact_text = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[@class='py-2 text-sm text-slate-600 hover:text-blue-600'][normalize-space()='Blog']")))
-    contact_text.click()
+    blog_text = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[@class='py-2 text-sm text-slate-600 hover:text-blue-600'][normalize-space()='Blog']")))
+    blog_text.click()
     wait.until(EC.title_is("Blog | Worklenz"))
 
 def verify():

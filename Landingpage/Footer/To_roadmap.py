@@ -15,8 +15,8 @@ def roadmap():
     driver.execute_script("window.scrollBy(0,document.body.scrollHeight)")
 
     wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/footer")))
-    contact_text = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[normalize-space()='Roadmap']")))
-    contact_text.click()
+    roadmap_text = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[normalize-space()='Roadmap']")))
+    roadmap_text.click()
     print(driver.title)
 
 
