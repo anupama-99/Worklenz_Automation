@@ -1,19 +1,25 @@
-                         ####      Done          ###
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-driver = webdriver.Chrome()
+# Set Chrome options
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--ignore-certificate-errors')
 
-wait = WebDriverWait(driver, 10)
+# Initialize the driver with the configured options
+driver = webdriver.Chrome(options=chrome_options)
+
+wait = WebDriverWait(driver,10)
 
 driver.get("https://uat.worklenz.com/")
 driver.maximize_window()
 
-def product_hunt():
-    product_hunt_button = driver.find_element(By.XPATH,"//img[contains(@alt,'Your Work, Elevated | Product Hunt')]")
-    product_hunt_button.click()
+def incrementl_company():
+    company = driver.find_element(By.XPATH,"//a[@href='https://incrementl.com/']//picture//img[@alt='gui']")
+    company.click()
+
 
     # Handle the new window  # Store the ID of the original window
     original_window = driver.current_window_handle
@@ -30,9 +36,9 @@ def product_hunt():
             driver.switch_to.window(window)
             break
 
-    # print new page title
+    wait.until(EC.title_contains("Incrementl"))
+
     print(driver.title)
 
-product_hunt()
 
-driver.quit()
+incrementl_company()
