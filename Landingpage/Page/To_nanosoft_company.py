@@ -38,3 +38,5 @@ def nanosoft_company():
 
 
 nanosoft_company()
+
+driver.quit()

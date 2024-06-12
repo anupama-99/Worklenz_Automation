@@ -1,4 +1,4 @@
-                              ###       Done         #
+                              ###       Done         ###
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -12,8 +12,8 @@ wait = WebDriverWait(driver,10)
 driver.get("https://uat.worklenz.com/")
 driver.maximize_window()
 
-def kainovation_company():
-    company = driver.find_element(By.XPATH,"//a[@href='https://kainovation.com/']//picture//img[@alt='gui']")
+def soffcricket_company():
+    company = driver.find_element(By.XPATH,"//a[@href='https://soffcricket.com/']//picture//img[@alt='gui']")
     company.click()
 
 
@@ -32,11 +32,11 @@ def kainovation_company():
             driver.switch_to.window(window)
             break
 
-    wait.until(EC.title_contains("Kainovation Technologies"))
+    wait.until(EC.title_contains("Soff Cricket"))
 
     print(driver.title)
 
 
-kainovation_company()
+soffcricket_company()
 
 driver.quit()
