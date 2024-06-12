@@ -1,4 +1,4 @@
-                           ###       Done        ###
+                                ###       Done        ###
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,23 +11,23 @@ wait = WebDriverWait(driver,10)
 driver.get("https://uat.worklenz.com/time-tracking/")
 driver.maximize_window()
 
-def contact():
+def about():
     driver.execute_script("window.scrollBy(0,document.body.scrollHeight)")
 
     wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/footer")))
-    contact_text = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[normalize-space()='Contact']")))
-    contact_text.click()
-    wait.until(EC.title_is("Contact | Worklenz"))
+    about_text = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[normalize-space()='About']")))
+    about_text.click()
+    wait.until(EC.title_is("About | Worklenz"))
 
 def verify():
     act_title =driver.title
-    exp_title = "Contact | Worklenz"
+    exp_title = "About | Worklenz"
     if act_title == exp_title:
-        print("In contact page")
+        print("In about page")
     else:
-        print("Not in contact page")
+        print("Not in about page")
 
-contact()
+about()
 verify()
 
 driver.quit()
