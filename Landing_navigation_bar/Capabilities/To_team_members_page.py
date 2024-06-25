@@ -17,11 +17,11 @@ def team_memb():
     capabilities.click()
     team.click()
 
-    wait.until(EC.title_is("Analytics | Worklenz"))
+    wait.until(EC.title_is("Analytics_page | Worklenz"))
 
 def verify():
     act_title = driver.title
-    exep_title = "Analytics | Worklenz"
+    exep_title = "Analytics_page | Worklenz"
     if act_title == exep_title:
         print("In Team member page")
     else:

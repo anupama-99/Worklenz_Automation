@@ -13,15 +13,15 @@ driver.maximize_window()
 
 def analysis():
     features = wait.until(EC.visibility_of_element_located((By.XPATH, "//span[normalize-space()='Features']")))
-    analytics = driver.find_element(By.XPATH,"//a[normalize-space()='Analytics']")
+    analytics = driver.find_element(By.XPATH,"//a[normalize-space()='Analytics_page']")
     features.click()
     analytics.click()
 
-    wait.until(EC.title_is("Analytics | Worklenz"))
+    wait.until(EC.title_is("Analytics_page | Worklenz"))
 
 def verify():
     act_title = driver.title
-    exep_title = "Analytics | Worklenz"
+    exep_title = "Analytics_page | Worklenz"
     if act_title == exep_title:
         print("In analytics page")
     else:
