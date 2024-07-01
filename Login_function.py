@@ -1,12 +1,10 @@
-# login_module.py
 
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 
-email = "anupamaudeshani1999@gmail.com"
+email = "anupamabb4@gmail.com"
 password = "#18Apc.3619#"
 
 def login(driver, wait):

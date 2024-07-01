@@ -1,29 +1,22 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+import Login_function  # Import the login function
 
 driver = webdriver.Chrome()
 driver.get("https://uat.app.worklenz.com/auth/login")
-time.sleep(5)
+wait = WebDriverWait(driver,10)
 driver.maximize_window()
+# Call the login function from the imported module
+Login_function.login(driver,wait)
 
-email = "anupamaudeshani1999@gmail.com"
-password = "#18Apc.3619#"
-
-def login():
-    emailbox = driver.find_element(By.XPATH,"//input[@placeholder='Email']")
-    emailbox.send_keys(email)
-    passwordbox = driver.find_element(By.XPATH,"//input[@placeholder='Password']")
-    passwordbox.send_keys(password)
-    loginbutton = driver.find_element(By.XPATH,"//button[@class='ant-btn mt-1 ant-btn-primary ant-btn-lg ant-btn-block']")
-    loginbutton.click()
-    time.sleep(5)
-
-def confirm():
+def confirm_date():
     date = driver.find_element(By.XPATH,"//h4[@class='mb-0 ant-typography']")
     print(date.text)
 
-login()
-confirm()
+
+confirm_date()
 
 driver.quit()

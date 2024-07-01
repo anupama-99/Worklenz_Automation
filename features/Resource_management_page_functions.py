@@ -1,4 +1,5 @@
-import pytest
+
+
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -6,17 +7,63 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException
 import time
 
-# Fixture to set up WebDriver
-@pytest.fixture
-def driver():
-    driver = webdriver.Chrome()  # You can change this to your preferred WebDriver
-    yield driver
-    driver.quit()
+# Initialize the Chrome driver
+driver = webdriver.Chrome()
+wait = WebDriverWait(driver,10)
+driver.get("https://uat.worklenz.com/resource-management/")
+driver.maximize_window()
 
-# Test function for footer links
-def test_footer_links(driver):
-    wait = WebDriverWait(driver, 10)  # Adjust the timeout as needed
+videos = [
+    "video-0",
+    "video-1"
+]
 
+def resource_management():
+    print(driver.title)
+    # get start button
+    button = driver.find_element(By.XPATH,"//a[@class='rounded-full text-center transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 focus-visible:outline-none focus-visible:shadow-outline-blue px-7 py-2.5 bg-blue-600 text-white hover:bg-blue-800 flex gap-1 items-center justify-center w-40 mx-auto mt-8']")
+    button.click()
+
+    if len(driver.window_handles) > 1:
+        driver.switch_to.window(driver.window_handles[1])
+        time.sleep(5)  # Adjust if necessary
+        driver.close()
+        driver.switch_to.window(driver.window_handles[0])
+    else:
+        time.sleep(5)  # Adjust if necessary
+        driver.back()
+
+    #.......... play videos in the page
+    for video in videos:
+        # Wait for the video element to be present
+        video = wait.until(EC.presence_of_element_located((By.ID, video)))
+
+        # Scroll to the element
+        driver.execute_script("arguments[0].scrollIntoView();", video)
+
+        if video:
+
+            # Play the video using JavaScript
+            driver.execute_script("arguments[0].play();", video)
+
+            # Wait for a few seconds to let the video play
+            time.sleep(20)
+
+            # Check current playback time
+            current_time = driver.execute_script("return arguments[0].currentTime;", video)
+            print(f"Current playback time: {current_time} seconds")
+
+            # Optionally, you can check if the video has played for at least a certain duration
+            if current_time > 0:
+                print(f"video is successfully playing.")
+
+            else:
+                print("Video failed to play.")
+
+        else:
+            print("Video element not found.")
+
+def footer_links():
     def click_element(xpath):
         for _ in range(9):  # Retry up to 9 times
             try:
@@ -45,10 +92,7 @@ def test_footer_links(driver):
 
     print('Footer links successfully executed')
 
-# Test function for footer accounts
-def test_footer_accounts(driver):
-    wait = WebDriverWait(driver, 10)  # Adjust the timeout as needed
-
+def footer_accounts():
     def click_element(xpath):
         for _ in range(4):  # Retry up to 4 times
             try:
@@ -83,4 +127,16 @@ def test_footer_accounts(driver):
     # Wait for a few seconds to observe the result
     time.sleep(5)
 
-    print('Successfully entered accounts')
+    print('successfully enter to accounts')
+
+# Page functions
+resource_management()
+
+# Run the footer links function
+footer_links()
+
+# Run footer account function
+footer_accounts()
+
+# Close browser
+driver.quit()

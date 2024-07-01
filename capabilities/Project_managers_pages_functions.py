@@ -1,27 +1,33 @@
 
-
+import pytest
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import StaleElementReferenceException
 import time
-
-# Initialize the Chrome driver
-driver = webdriver.Chrome()
-wait = WebDriverWait(driver,10)
-driver.get("https://uat.worklenz.com/time-tracking/")
-driver.maximize_window()
 
 videos = [
     "video-0",
     "video-1",
     "video-2",
     "video-3",
-    "video-4"
+    "video-4",
+    "video-5"
 ]
 
-def timetrack():
+@pytest.fixture(scope="module")
+def driver():
+    # Initialize the Chrome driver
+    driver = webdriver.Chrome()
+    driver.get("https://uat.worklenz.com/for-project-managers/")
+    driver.maximize_window()
+    yield driver  # Yield the WebDriver to the test functions
+    driver.quit()
+
+
+def test_project_managers(driver):
+    wait = WebDriverWait(driver, 10)
+    print(driver.title)
     # get start button
     button = driver.find_element(By.XPATH,"//a[@class='rounded-full text-center transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 focus-visible:outline-none focus-visible:shadow-outline-blue px-7 py-2.5 bg-blue-600 text-white hover:bg-blue-800 flex gap-1 items-center justify-center w-40 mx-auto mt-8']")
     button.click()
@@ -66,6 +72,12 @@ def timetrack():
             print("Video element not found.")
 
 
-timetrack()
 
-driver.quit()
+from Footer_linkes import test_footer_links,test_footer_accounts
+
+def test_footer(driver):
+    test_footer_links(driver)
+    test_footer_accounts(driver)
+
+#####################footer test twice ######################
+
