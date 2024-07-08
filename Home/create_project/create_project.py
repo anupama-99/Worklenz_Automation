@@ -1,5 +1,6 @@
 import select
 import time
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,11 +14,11 @@ wait = WebDriverWait(driver, 10)
 
 driver.maximize_window()
 
-# Call the login function from the imported module
+# Call the login function
 Login_function.login(driver, wait)
 
 
-def create_project():
+def test_create_project():
     # Wait for and click the 'Create Project' button
     button = wait.until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='Create Project']")))
     button.click()
@@ -26,12 +27,12 @@ def create_project():
     slider = wait.until(EC.visibility_of_element_located((By.XPATH, "//div[@class='ant-drawer ant-drawer-right ng-star-inserted ant-drawer-open']//div[@class='ant-drawer-body']")))
 
 
-def enter_name():
+def test_enter_name():
     # Enter new project name
     name_input = wait.until(EC.visibility_of_element_located((By.XPATH, "//input[@placeholder='Name']")))
     name_input.send_keys("OMI Game")
 
-def enter_color():
+def test_enter_color():
     colors_to_select = driver.find_element(By.XPATH,"//nz-tag[@class='ant-tag ant-dropdown-trigger ms-2 rounded-circle cursor-pointer ant-tag-has-color']")
     colors_to_select.click()
 
@@ -53,7 +54,7 @@ def enter_color():
 #         time.sleep(1)
 
 
-def status():
+def test_status():
     status_type = driver.find_element(By.XPATH,"//nz-select-item[@title='Proposed']")
     status_type.click()
 
@@ -69,7 +70,7 @@ def status():
     #         time.sleep(5)
     #         break
 
-def health():
+def test_health():
     health_types = driver.find_element(By.XPATH,"//*[@id='cdk-overlay-2']/div/div[2]/div/div/div[2]/nz-spin/div/form/nz-form-item[4]/nz-form-control/div/div/nz-select/nz-select-top-control/nz-select-item")
     health_types.click()
 
@@ -80,26 +81,19 @@ def health():
 #     categories = wait.until(EC.element_to_be_clickable((By.XPATH,"//nz-select-top-control[@class='ant-select-selector ng-tns-c146563758-207']")))
 #     categories.click()
 
-def note():
+def test_note():
     note_box = wait.until(EC.presence_of_element_located((By.XPATH,"//textarea[@placeholder='Notes']")))
     note_box.send_keys("mobile game developement project manage ")
 
-def client():
+def test_client():
     client = wait.until(EC.visibility_of_element_located((By.XPATH,"//input[@placeholder='Select client']")))
-    client.send_keys("mr.rohan")
+    client.send_keys("Ceydigital")
+
+def test_create():
+    create_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//button[@class='ant-btn ant-btn-primary ant-btn-block ng-star-inserted']")))
+    create_button.click()
 
 
-
-
-# Execute the function
-create_project()
-enter_name()
-enter_color()
-status()
-health()
-# category()
-note()
-client()
 
 
 # Close the browser
