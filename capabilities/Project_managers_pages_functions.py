@@ -1,6 +1,7 @@
 
 import pytest
 from selenium import webdriver
+from selenium.common import StaleElementReferenceException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -19,12 +20,26 @@ videos = [
 def driver():
     # Initialize the Chrome driver
     driver = webdriver.Chrome()
-    driver.get("https://uat.worklenz.com/for-project-managers/")
+    driver.get("https://uat.worklenz.com/")
     driver.maximize_window()
     yield driver  # Yield the WebDriver to the test functions
     driver.quit()
 
+def test_enter_project_mng(driver):
+    wait = WebDriverWait(driver, 10)
+    capabilities = wait.until(EC.visibility_of_element_located((By.XPATH, "//span[normalize-space()='Capabilities']")))
+    project_mng = driver.find_element(By.XPATH,"//a[normalize-space()='Project Managers']")
+    capabilities.click()
+    project_mng.click()
 
+    wait.until(EC.title_is("Managers | Worklenz"))
+
+    act_title = driver.title
+    exep_title = "Managers | Worklenz"
+    if act_title == exep_title:
+        print("In project managers page")
+    else:
+        print("Not in project managers page")
 def test_project_managers(driver):
     wait = WebDriverWait(driver, 10)
     print(driver.title)
@@ -73,11 +88,72 @@ def test_project_managers(driver):
 
 
 
-from Footer_linkes import test_footer_links,test_footer_accounts
+def test_footer_links(driver):
+    def click_element(xpath):
+        wait = WebDriverWait(driver,10)
+        for _ in range(9):  # Retry up to 9 times
+            try:
+                element = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+                driver.execute_script("arguments[0].scrollIntoView(true);", element)
+                element.click()
+                time.sleep(5)
+                driver.back()
+                break  # Exit the loop if successful
+            except StaleElementReferenceException:
+                pass  # Retry the loop if exception occurs
 
-def test_footer(driver):
-    test_footer_links(driver)
-    test_footer_accounts(driver)
+    # Click the buttons using the click_element function
+    click_element("//a[@class='text-lg flex items-center']//img[@alt='Logo']")
+    click_element("//a[normalize-space()='About']")
+    click_element("//a[normalize-space()='Contact']")
+    click_element("//a[normalize-space()='Roadmap']")
+    click_element("//a[normalize-space()='Feedback']")
+    click_element("//a[@class='py-2 text-sm text-slate-600 hover:text-blue-600'][normalize-space()='Blog']")
+    click_element("//a[normalize-space()='Community']")
+    click_element("//a[normalize-space()='Terms']")
+    click_element("//a[normalize-space()='Privacy']")
 
-#####################footer test twice ######################
+    # Wait for a few seconds to observe the result
+    time.sleep(5)
+
+    print('Footer links successfully executed')
+
+def test_footer_accounts(driver):
+    wait = WebDriverWait(driver, 10)
+    def click_element(xpath):
+        for _ in range(4):  # Retry up to 4 times
+            try:
+                element = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+                driver.execute_script("arguments[0].scrollIntoView(true);", element)
+                element.click()
+                time.sleep(5)
+
+                # Switch to the new tab if it opens
+                if len(driver.window_handles) > 1:
+                    driver.switch_to.window(driver.window_handles[1])
+                    time.sleep(5)  # Adjust if necessary
+                    driver.close()
+                    driver.switch_to.window(driver.window_handles[0])
+                else:
+                    time.sleep(5)  # Adjust if necessary
+                    driver.back()
+                break  # Exit the loop if successful
+            except StaleElementReferenceException:
+                pass  # Retry the loop if exception occurs
+
+    # Click the buttons using the click_element function
+    # to facebook
+    click_element("//a[@href='https://www.facebook.com/Worklenz/']")
+    # to github
+    click_element("//footer[contains(@class,'py-14 bg-slate-100 border-t border-slate-100 mt-10')]//a[4]//*[name()='svg']")
+    # to linkedIn
+    click_element("//a[@href='https://lk.linkedin.com/showcase/worklenz/']//*[name()='svg']")
+    # to twitter
+    click_element("//a[@href='https://twitter.com/WorklenzHQ']//*[name()='svg']")
+
+    # Wait for a few seconds to observe the result
+    time.sleep(5)
+
+    print('successfully enter to accounts')
+
 
