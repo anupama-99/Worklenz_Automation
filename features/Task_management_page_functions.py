@@ -1,17 +1,11 @@
 
-
+import pytest
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException
 import time
-
-# Initialize the Chrome driver
-driver = webdriver.Chrome()
-wait = WebDriverWait(driver,10)
-driver.get("https://uat.worklenz.com/task-management/")
-driver.maximize_window()
 
 videos = [
     "video-0",
@@ -20,8 +14,33 @@ videos = [
     "video-3",
     "video-4"
 ]
+@pytest.fixture(scope="module")
+def driver():
+    # Initialize the Chrome driver
+    driver = webdriver.Chrome()
+    driver.get("https://uat.worklenz.com/")
+    driver.maximize_window()
+    yield driver
+    driver.quit()
 
-def task_management():
+def test_enter_task_mng(driver):
+    wait = WebDriverWait(driver, 10)
+    features = wait.until(EC.visibility_of_element_located((By.XPATH,"//span[normalize-space()='Features']")))
+    task_mng = driver.find_element(By.XPATH,"//a[normalize-space()='Task Management']")
+    features.click()
+    task_mng.click()
+
+    wait.until(EC.title_is("Task Management | Worklenz"))
+
+    act_title = driver.title
+    exep_title = "Task Management | Worklenz"
+    if act_title == exep_title:
+        print("In task management page")
+    else:
+        print("Not in task management page")
+
+def test_task_management(driver):
+    wait = WebDriverWait(driver, 10)
     print(driver.title)
     # get start button
     button = driver.find_element(By.XPATH,"//a[@class='rounded-full text-center transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 focus-visible:outline-none focus-visible:shadow-outline-blue px-7 py-2.5 bg-blue-600 text-white hover:bg-blue-800 flex gap-1 items-center justify-center w-40 mx-auto mt-8']")
@@ -66,7 +85,8 @@ def task_management():
         else:
             print("Video element not found.")
 
-def footer_links():
+def test_footer_links(driver):
+    wait = WebDriverWait(driver, 10)
     def click_element(xpath):
         for _ in range(9):  # Retry up to 9 times
             try:
@@ -95,7 +115,8 @@ def footer_links():
 
     print('Footer links successfully executed')
 
-def footer_accounts():
+def test_footer_accounts(driver):
+    wait = WebDriverWait(driver, 10)
     def click_element(xpath):
         for _ in range(4):  # Retry up to 4 times
             try:
@@ -132,14 +153,3 @@ def footer_accounts():
 
     print('successfully enter to accounts')
 
-# Page functions
-task_management()
-
-# Run the footer links function
-footer_links()
-
-# Run footer account function
-footer_accounts()
-
-# Close browser
-driver.quit()
