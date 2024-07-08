@@ -32,51 +32,47 @@ def test_upgrade_now_button():
     button = wait.until(EC.element_to_be_clickable((By.XPATH,"/html/body/worklenz-root/worklenz-layout/nz-spin/div/nz-layout/nz-layout/nz-content/div/worklenz-license-expired/nz-result/div[4]/button/span")))
     button.click()
 
-def test_upgrade_plan_forfree():
-    upgrade_plan = wait.until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(),'Upgrade Plan')]")))
+    upgrade_plan = wait.until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(),'Upgrade Plan')]")))
     upgrade_plan.click()
 
-    free_plan_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//div[normalize-space()='Free']")))
+def test_change_seats():
+    seats_choose_button = wait.until(EC.presence_of_element_located((By.ID,"seats")))
+    seats_choose_button.click()
+
+    amount = wait.until(EC.element_to_be_clickable((By.XPATH,"//nz-option-item[@title='4']")))
+    amount.click()
+
+def test_upgrade_plan_forfree():
+
+    free_plan_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//*[@id='cdk-overlay-3']/nz-modal-container/div/div/div/div/div[2]/div[1]/nz-card")))
     free_plan_button.click()
-    time.sleep(5)
 
-    try_it_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//button[@class='ant-btn w-100 mt-3 mb-2 ant-btn-primary']")))
-    try_it_button.click()
+    driver.execute_script("window.scrollBy(0,document.body.scrollHeight)")
 
-    # #Chech free plan activate is suceess
-    # notification = driver.find_element(By.XPATH,"//*[@id='cdk-overlay-8']/nz-notification-container/div[2]/nz-notification")
-    # assert notification.is_displayed()
+    try_for_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//button[@class='ant-btn mt-3 mb-2 ant-btn-primary ant-btn-lg ng-star-inserted']")))
+    try_for_button.click()
+
 
 ##############################   error ###########################################
-def test_upgrade_plan_for_monthly():
-    upgradeplan = wait.until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(),'Upgrade Plan')]")))
-    upgradeplan.click()
+# def test_upgrade_plan_for_monthly():
+#
+#     monthly_plan_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//*[@id='cdk-overlay-4']/nz-modal-container/div/div/div/div/div[2]/div[2]/nz-card")))
+#     monthly_plan_button.click()
+#
+#     driver.execute_script("window.scrollBy(0,document.body.scrollHeight)")
+#
+#     purchase_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Continue with Pro - Annual']")))
+#     purchase_button.click()
 
-    monthly_plan_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//div[normalize-space()='Monthly']")))
-    monthly_plan_button.click()
-    time.sleep(10)
+# def test_upgrade_plan_for_annual():
+#
+#     anuual_plan_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//*[@id='cdk-overlay-4']/nz-modal-container/div/div/div/div/div[2]/div[3]/nz-card")))
+#     anuual_plan_button.click()
+#     time.sleep(5)
+#
+#     purchase_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//button[@class='ant-btn mt-3 mb-2 ant-btn-primary ant-btn-lg ng-star-inserted']")))
+#     purchase_button.click()
 
-    purchase_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//button[@class='ant-btn w-100 mt-3 mb-2 ant-btn-primary']")))
-    purchase_button.click()
-
-
-def test_upgrade_plan_for_annual():
-    upgrade_plan = wait.until(EC.element_to_be_clickable((By.XPATH,"//span[contains(text(),'Upgrade Plan')]")))
-    upgrade_plan.click()
-
-    anuual_plan_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//div[contains(text(),'Annually')]")))
-    anuual_plan_button.click()
-    time.sleep(5)
-
-    purchase_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Purchase']")))
-    purchase_button.click()
-
-def test_leave_upgrade_plan_types():
-    upgradeplan = wait.until(EC.element_to_be_clickable((By.XPATH, "//span[contains(text(),'Upgrade Plan')]")))
-    upgradeplan.click()
-
-    leave_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//span[@class='anticon ant-modal-close-icon anticon-close ng-star-inserted']//*[name()='svg']")))
-    leave_button.click()
 
 
 

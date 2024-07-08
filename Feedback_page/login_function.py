@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# Initialize the WebDriver (assuming you have the chromedriver in your PATH)
+
 @pytest.fixture(scope="module")
 def driver():
     # Initialize the Chrome driver
